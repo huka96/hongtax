@@ -336,7 +336,7 @@ export default function HongTaxWebsite() {
               your tax and accounting needs.
             </div>
             <div className="contact-lines">
-              <div>✉ hello@hongtax.com</div>
+              <div>✉ fgrt73@gmail.com</div>
               <div>☎ +1 (234) 456-7890</div>
             </div>
           </div>
@@ -367,7 +367,7 @@ export default function HongTaxWebsite() {
               United States
             </div>
             <div className="footer-col">
-              hello@hongtax.com<br />
+              fgrt73@gmail.com<br />
               +1 (234) 456-7890
             </div>
             <div className="socials">

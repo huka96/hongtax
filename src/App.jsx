@@ -1,391 +1,385 @@
-export default function HongTaxWebsite() {
-  const services = [
-    {
-      icon: '📝',
-      title: 'Tax Preparation & Planning',
-      description:
-        'Individual and business tax returns, planning, and compliance support to minimize tax exposure and improve clarity.',
-    },
-    {
-      icon: '🧮',
-      title: 'Accounting & Bookkeeping',
-      description:
-        'Accurate bookkeeping and reporting to keep your business organized, compliant, and decision-ready.',
-    },
-    {
-      icon: '◔',
-      title: 'Business Advisory',
-      description:
-        'Strategic guidance on operations, cash flow, entity structure, and financial processes for growth.',
-    },
-    {
-      icon: '👥',
-      title: 'Payroll & Sales Tax Services',
-      description:
-        'Payroll processing and sales tax compliance support you can rely on throughout the year.',
-    },
-  ];
+import { useEffect, useMemo, useState } from 'react';
+import './App.css';
+import logoDarkBg from './assets/logo-dark-bg.png';
+import logoLightBg from './assets/logo-light-bg.png';
 
-  const strengths = [
-    {
-      icon: '🛡',
-      title: 'Trusted & Reliable',
-    },
-    {
-      icon: '💬',
-      title: 'Clear Communication',
-    },
-    {
-      icon: '↗',
-      title: 'Proactive Approach',
-    },
-  ];
+const LANGUAGES = [
+  { code: 'ko', label: '한' },
+  { code: 'zh', label: '中' },
+  { code: 'en', label: 'EN' },
+];
+
+const copy = {
+  ko: {
+    nav: ['서비스', '진행절차', '고객유형', 'FAQ', '상담신청'],
+    badge: 'HONG Tax & Advisory',
+    heroTitle: '미국 세무, 한국어로 정확하게.',
+    heroText:
+      '개인 세금보고부터 FBAR, FATCA, IRS/FTB Notice, 소규모 비즈니스 세무까지 — 복잡한 미국 세무를 명확하고 체계적으로 안내합니다.',
+    primaryCta: '상담 신청하기',
+    secondaryCta: '서비스 보기',
+    licenseNote: 'CPA license 발급 전에는 서비스 범위와 문구가 조정될 수 있습니다.',
+    servicesLabel: 'Services',
+    servicesTitle: '온라인 기반 미국 세무 서비스',
+    servicesText:
+      '처음부터 모든 업무를 무리하게 확장하기보다, 핵심 세무 영역을 중심으로 시스템화된 접수·검토·진행 프로세스를 구축합니다.',
+    services: [
+      ['Individual Tax Return', 'Form 1040, Federal & State return, extension filing, resident / nonresident tax review.'],
+      ['FBAR & FATCA', '한국 및 해외 금융계좌, Form 8938, FinCEN 114 대상 여부 검토와 신고 지원.'],
+      ['IRS / FTB Notice', 'IRS 또는 California FTB letter 분석, 답변 방향 정리, penalty 및 balance notice 대응.'],
+      ['ITIN & Tax Compliance', 'ITIN 신청, Form 8843, prior-year filing, amended return 등 compliance 정리.'],
+      ['Small Business Tax', 'Schedule C, LLC, S-Corp, Partnership, bookkeeping cleanup 및 business return 준비.'],
+      ['Tax Planning', 'RSU, ESPP, capital gain, CA residency, 이민/거주 상태 변화에 따른 tax planning.'],
+    ],
+    processLabel: 'How it works',
+    processTitle: '처음 문의부터 신고 완료까지',
+    process: [
+      ['01', '상담 신청', '간단한 상황과 필요한 서비스를 제출합니다.'],
+      ['02', '자료 업로드', '보안 포털을 통해 세금자료를 업로드합니다.'],
+      ['03', '검토 및 견적', '업무 범위, 리스크, 예상 fee를 정리합니다.'],
+      ['04', '작성 및 리뷰', '신고서 작성 후 주요 포인트를 설명합니다.'],
+      ['05', '전자서명 및 제출', '승인 후 e-file 또는 필요한 방식으로 제출합니다.'],
+    ],
+    clientsLabel: 'Who we help',
+    clientsTitle: '이런 고객에게 특히 적합합니다',
+    clients: [
+      ['Bay Area Professionals', 'W-2, RSU, ESPP, stock compensation이 있는 직장인'],
+      ['Immigrant Families', 'F-1, H-1B, green card, residency 이슈가 있는 가정'],
+      ['Foreign Asset Holders', '한국 계좌, 증권, 보험, 증여·상속 이슈가 있는 미국 납세자'],
+      ['Small Business Owners', 'California에서 사업을 운영하는 개인사업자와 소규모 법인'],
+    ],
+    faqLabel: 'FAQ',
+    faqTitle: '자주 묻는 질문',
+    faqs: [
+      ['FBAR 신고 대상인지 어떻게 알 수 있나요?', '해외 금융계좌 합산 최고잔액이 기준을 넘는지, 계좌 유형과 소유/서명권 여부를 함께 봐야 합니다.'],
+      ['한국 계좌가 있으면 무조건 FATCA 신고해야 하나요?', '아닙니다. Form 8938은 filing status와 거주지에 따라 기준금액이 다르므로 별도 검토가 필요합니다.'],
+      ['IRS 또는 FTB notice를 받았는데 도와줄 수 있나요?', '가능합니다. Notice 원문, 과거 신고서, payment history를 확인한 뒤 대응 방향을 정리합니다.'],
+      ['법인세 신고도 가능한가요?', '초기에는 경험과 자료 상태가 명확한 S-Corp, Partnership, LLC 중심으로 선별적으로 진행하는 방향이 안전합니다.'],
+    ],
+    contactLabel: 'Contact',
+    contactTitle: '상담을 시작해보세요',
+    contactText:
+      '상황을 간단히 남겨주시면 필요한 서비스, 예상 자료, 다음 단계를 정리해 드립니다.',
+    formName: '이름',
+    formEmail: '이메일',
+    formService: '필요한 서비스',
+    formMessage: '상황 설명',
+    formButton: '이메일로 문의하기',
+    footerText: 'Bilingual U.S. tax and advisory support for Korean-speaking individuals and small businesses.',
+  },
+  zh: {
+    nav: ['服务', '流程', '客户类型', 'FAQ', '咨询'],
+    badge: 'HONG Tax & Advisory',
+    heroTitle: '清晰可靠的美国税务服务。',
+    heroText:
+      '从个人报税、FBAR、FATCA、IRS/FTB 通知到小型企业税务，我们用系统化流程帮助您理解并完成美国税务事项。',
+    primaryCta: '预约咨询',
+    secondaryCta: '查看服务',
+    licenseNote: 'CPA license 正式签发前，服务范围和网站表述可能会调整。',
+    servicesLabel: 'Services',
+    servicesTitle: '线上化美国税务服务',
+    servicesText:
+      '以核心税务服务为起点，建立清晰的咨询、资料上传、审核、报价和申报流程。',
+    services: [
+      ['Individual Tax Return', 'Form 1040, Federal & State return, extension filing, resident / nonresident review.'],
+      ['FBAR & FATCA', '海外金融账户、Form 8938、FinCEN 114 是否需要申报的判断和准备。'],
+      ['IRS / FTB Notice', '分析 IRS 或 California FTB 通知，并整理回复和解决方案。'],
+      ['ITIN & Tax Compliance', 'ITIN 申请、Form 8843、往年补报、修正申报等合规事项。'],
+      ['Small Business Tax', 'Schedule C, LLC, S-Corp, Partnership, bookkeeping cleanup 与企业税务准备。'],
+      ['Tax Planning', 'RSU、ESPP、capital gain、CA residency 与身份变化相关税务规划。'],
+    ],
+    processLabel: 'How it works',
+    processTitle: '从咨询到提交的流程',
+    process: [
+      ['01', '提交咨询', '说明您的情况和需要的服务。'],
+      ['02', '上传资料', '通过安全资料入口上传税务文件。'],
+      ['03', '审核报价', '确认工作范围、风险点与预计费用。'],
+      ['04', '准备与复核', '完成税表准备并说明重点事项。'],
+      ['05', '签字与提交', '确认后电子签名并提交。'],
+    ],
+    clientsLabel: 'Who we help',
+    clientsTitle: '适合以下客户',
+    clients: [
+      ['Bay Area Professionals', '有 W-2、RSU、ESPP、股票收入的员工'],
+      ['Immigrant Families', '涉及 F-1、H-1B、绿卡、税务居民身份的家庭'],
+      ['Foreign Asset Holders', '拥有海外账户、证券、保险、赠与或继承事项的纳税人'],
+      ['Small Business Owners', '在 California 经营业务的个人或小型企业'],
+    ],
+    faqLabel: 'FAQ',
+    faqTitle: '常见问题',
+    faqs: [
+      ['我是否需要申报 FBAR？', '需要根据海外金融账户最高余额、账户类型以及是否拥有签字权来判断。'],
+      ['有海外账户就一定要报 FATCA 吗？', '不一定。Form 8938 的门槛因身份和居住地不同而不同。'],
+      ['收到 IRS 或 FTB 通知可以协助吗？', '可以。我们会先审核通知、历史税表和付款记录，再整理回复方案。'],
+      ['可以处理公司税吗？', '初期以资料清晰、风险可控的 S-Corp、Partnership、LLC 等业务为主。'],
+    ],
+    contactLabel: 'Contact',
+    contactTitle: '开始咨询',
+    contactText: '留下您的基本情况，我们会整理所需资料和下一步。',
+    formName: '姓名',
+    formEmail: '邮箱',
+    formService: '需要的服务',
+    formMessage: '情况说明',
+    formButton: '通过邮件咨询',
+    footerText: '面向韩语客户、个人和小型企业的美国税务与咨询服务。',
+  },
+  en: {
+    nav: ['Services', 'Process', 'Clients', 'FAQ', 'Contact'],
+    badge: 'HONG Tax & Advisory',
+    heroTitle: 'U.S. tax guidance, made clear.',
+    heroText:
+      'From individual tax returns to FBAR, FATCA, IRS/FTB notices, and small business tax support — a structured, bilingual approach to U.S. tax compliance.',
+    primaryCta: 'Request Consultation',
+    secondaryCta: 'View Services',
+    licenseNote: 'Service scope and wording may be adjusted before CPA license issuance.',
+    servicesLabel: 'Services',
+    servicesTitle: 'Online-first U.S. tax services',
+    servicesText:
+      'A focused service model built around intake, secure document collection, review, quote, preparation, and filing.',
+    services: [
+      ['Individual Tax Return', 'Form 1040, Federal & State return, extension filing, resident / nonresident tax review.'],
+      ['FBAR & FATCA', 'Foreign account reporting review and filing support for FinCEN 114 and Form 8938.'],
+      ['IRS / FTB Notice', 'Notice review, response planning, penalty review, and balance-due issue support.'],
+      ['ITIN & Tax Compliance', 'ITIN applications, Form 8843, prior-year filings, and amended return cleanup.'],
+      ['Small Business Tax', 'Schedule C, LLC, S-Corp, Partnership, bookkeeping cleanup, and business return preparation.'],
+      ['Tax Planning', 'RSU, ESPP, capital gains, California residency, and tax planning around life changes.'],
+    ],
+    processLabel: 'How it works',
+    processTitle: 'From first request to final filing',
+    process: [
+      ['01', 'Request', 'Submit your situation and the service you need.'],
+      ['02', 'Upload', 'Upload tax documents through a secure portal.'],
+      ['03', 'Review & Quote', 'We define scope, risk areas, and expected fee.'],
+      ['04', 'Prepare & Review', 'Your return is prepared and key points are explained.'],
+      ['05', 'E-sign & File', 'After approval, we e-file or submit as required.'],
+    ],
+    clientsLabel: 'Who we help',
+    clientsTitle: 'Designed for these clients',
+    clients: [
+      ['Bay Area Professionals', 'Employees with W-2, RSU, ESPP, and stock compensation'],
+      ['Immigrant Families', 'Families navigating F-1, H-1B, green card, and residency issues'],
+      ['Foreign Asset Holders', 'U.S. taxpayers with Korean accounts, securities, insurance, gifts, or inheritance'],
+      ['Small Business Owners', 'California sole proprietors and small business owners'],
+    ],
+    faqLabel: 'FAQ',
+    faqTitle: 'Frequently asked questions',
+    faqs: [
+      ['How do I know if I need FBAR?', 'We review maximum foreign account balances, account types, ownership, and signature authority.'],
+      ['Does every foreign account require FATCA filing?', 'No. Form 8938 thresholds vary by filing status and residence, so a separate review is needed.'],
+      ['Can you help with IRS or FTB notices?', 'Yes. We review the notice, prior returns, and payment history before preparing a response strategy.'],
+      ['Do you prepare business returns?', 'Initially, business returns are accepted selectively based on records, scope, and risk profile.'],
+    ],
+    contactLabel: 'Contact',
+    contactTitle: 'Start with a consultation',
+    contactText:
+      'Share a brief summary of your situation and we will outline the service scope, document list, and next steps.',
+    formName: 'Name',
+    formEmail: 'Email',
+    formService: 'Service needed',
+    formMessage: 'Tell us about your situation',
+    formButton: 'Send Email Inquiry',
+    footerText: 'Bilingual U.S. tax and advisory support for Korean-speaking individuals and small businesses.',
+  },
+};
+
+function getInitialTheme() {
+  const saved = window.localStorage.getItem('hong-theme');
+  if (saved) return saved;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+export default function App() {
+  const [language, setLanguage] = useState(() => window.localStorage.getItem('hong-language') || 'ko');
+  const [theme, setTheme] = useState(getInitialTheme);
+  const t = copy[language];
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    window.localStorage.setItem('hong-theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.lang = language === 'zh' ? 'zh' : language;
+    window.localStorage.setItem('hong-language', language);
+  }, [language]);
+
+  const logo = theme === 'dark' ? logoDarkBg : logoLightBg;
+  const mailto = useMemo(() => {
+    const subject = encodeURIComponent('Consultation Request - HONG Tax & Advisory');
+    return `mailto:london@hongtax.com?subject=${subject}`;
+  }, []);
 
   return (
-    <div className="page-root">
-      <style>{`
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { margin: 0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f3ef; color: #1c2f57; }
-        a { text-decoration: none; color: inherit; }
-        button, input, textarea { font: inherit; }
-
-        .page-root { background: #f5f3ef; color: #1c2f57; }
-        .container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 28px; }
-
-        .topbar {
-          position: sticky; top: 0; z-index: 40;
-          background: rgba(245, 243, 239, 0.95);
-          backdrop-filter: blur(8px);
-          border-bottom: 1px solid rgba(28, 47, 87, 0.08);
-        }
-        .topbar-inner {
-          min-height: 88px; display: flex; align-items: center; justify-content: space-between; gap: 20px;
-        }
-        .brand-wrap { display: flex; flex-direction: column; gap: 4px; }
-        .brand-mark { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; font-size: 42px; line-height: 0.9; letter-spacing: -0.04em; }
-        .brand-sub { font-size: 18px; color: #d29a5f; }
-        .nav { display: flex; align-items: center; gap: 34px; font-size: 16px; }
-        .nav a { opacity: 0.9; }
-        .nav a:hover { opacity: 1; }
-        .btn {
-          display: inline-flex; align-items: center; justify-content: center;
-          border-radius: 12px; padding: 14px 24px; font-weight: 600; transition: 0.2s ease;
-        }
-        .btn-primary { background: #d29a5f; color: white; box-shadow: 0 8px 24px rgba(210, 154, 95, 0.25); }
-        .btn-primary:hover { transform: translateY(-1px); opacity: 0.95; }
-        .btn-dark { background: #1c2f57; color: white; box-shadow: 0 8px 24px rgba(28, 47, 87, 0.18); }
-        .btn-dark:hover { transform: translateY(-1px); opacity: 0.96; }
-        .btn-light { border: 1px solid rgba(28, 47, 87, 0.28); color: #1c2f57; background: transparent; }
-        .btn-light:hover { background: rgba(28, 47, 87, 0.04); }
-
-        .hero { padding: 58px 0 72px; }
-        .hero-grid {
-          display: grid; grid-template-columns: 1fr 1.02fr; gap: 44px; align-items: center;
-        }
-        .eyebrow {
-          color: #d29a5f; font-size: 15px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px;
-        }
-        .hero h1 {
-          margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 72px; line-height: 0.95; letter-spacing: -0.04em; color: #1c2f57;
-        }
-        .hero p {
-          margin: 24px 0 0; max-width: 560px; font-size: 21px; line-height: 1.7; color: rgba(28, 47, 87, 0.82);
-        }
-        .hero-actions { margin-top: 34px; display: flex; gap: 16px; flex-wrap: wrap; }
-
-        .hero-card {
-          background: #162a4f; color: white; border-radius: 18px; min-height: 560px;
-          box-shadow: 0 24px 60px rgba(14, 25, 45, 0.18); display: flex; align-items: center; justify-content: center; padding: 36px;
-        }
-        .logo-panel { text-align: center; }
-        .logo-icons { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 22px; }
-        .logo-shape-1, .logo-shape-2, .logo-shape-3, .logo-shape-4 { background: white; opacity: 0.98; }
-        .logo-shape-1 { width: 20px; height: 38px; }
-        .logo-shape-2 { width: 38px; height: 38px; border-radius: 50%; }
-        .logo-shape-3 { width: 18px; height: 42px; transform: rotate(-34deg); }
-        .logo-shape-4 { width: 38px; height: 38px; border-radius: 0 999px 999px 0; }
-        .logo-name { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; letter-spacing: -0.05em; font-size: 108px; line-height: 0.9; }
-        .logo-tag { font-size: 36px; color: #d29a5f; margin-top: 12px; }
-
-        .section-soft { background: #eeece9; padding: 84px 0; }
-        .section-title-wrap { text-align: center; max-width: 760px; margin: 0 auto 42px; }
-        .section-label { color: #d29a5f; text-transform: uppercase; font-weight: 700; letter-spacing: 0.08em; font-size: 15px; }
-        .section-title {
-          margin: 14px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: 56px; line-height: 1.02; letter-spacing: -0.03em;
-        }
-        .section-divider { width: 42px; height: 3px; border-radius: 999px; background: #d29a5f; margin: 18px auto 0; }
-
-        .service-grid {
-          display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 22px;
-        }
-        .service-card {
-          background: #f8f6f3; border-radius: 18px; padding: 28px 24px; box-shadow: 0 8px 20px rgba(28, 47, 87, 0.06); border: 1px solid rgba(28, 47, 87, 0.05);
-          display: flex; flex-direction: column; min-height: 288px;
-        }
-        .service-icon {
-          width: 62px; height: 62px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: rgba(28, 47, 87, 0.04); font-size: 31px; margin-bottom: 22px;
-        }
-        .service-card h3 { margin: 0 0 12px; font-size: 30px; line-height: 1.05; letter-spacing: -0.03em; }
-        .service-card p { margin: 0; color: rgba(28, 47, 87, 0.78); line-height: 1.75; font-size: 17px; }
-        .service-link { margin-top: auto; padding-top: 18px; color: #d29a5f; font-weight: 600; }
-
-        .about-band {
-          background: #162a4f; color: white; padding: 78px 0;
-        }
-        .about-grid { display: grid; grid-template-columns: 1fr 1.08fr; gap: 44px; align-items: center; }
-        .about-copy .section-label { color: #d8a56d; }
-        .about-copy .section-title { color: white; font-size: 58px; }
-        .about-copy .section-divider { margin-left: 0; }
-        .about-text {
-          color: rgba(255,255,255,0.86); font-size: 19px; line-height: 1.8; max-width: 520px; margin: 24px 0 0;
-        }
-        .strength-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 34px; }
-        .strength-item { display: flex; flex-direction: column; gap: 8px; }
-        .strength-icon { font-size: 34px; color: #d29a5f; }
-        .strength-title { font-size: 18px; line-height: 1.4; }
-        .about-image {
-          border-radius: 18px; min-height: 420px; overflow: hidden; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
-          background:
-            linear-gradient(rgba(19,33,63,0.28), rgba(19,33,63,0.12)),
-            url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
-        }
-
-        .contact-section { background: #f5f3ef; padding: 82px 0 72px; }
-        .contact-grid { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: 40px; align-items: start; }
-        .contact-text { margin-top: 24px; color: rgba(28, 47, 87, 0.82); font-size: 21px; line-height: 1.6; max-width: 430px; }
-        .contact-lines { display: grid; gap: 14px; margin-top: 26px; font-size: 20px; color: rgba(28, 47, 87, 0.92); }
-        .contact-card {
-          background: #fbfaf8; border-radius: 18px; padding: 34px; box-shadow: 0 14px 36px rgba(28, 47, 87, 0.08); border: 1px solid rgba(28, 47, 87, 0.06);
-        }
-        .contact-card h3 {
-          margin: 0 0 22px; font-family: Georgia, 'Times New Roman', serif; font-size: 42px; line-height: 1.05; letter-spacing: -0.03em;
-        }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .full-row { grid-column: 1 / -1; }
-        .field {
-          width: 100%; border: 1px solid rgba(28, 47, 87, 0.14); background: white; color: #1c2f57; border-radius: 10px;
-          padding: 15px 16px; outline: none; font-size: 16px;
-        }
-        .field:focus { border-color: #d29a5f; box-shadow: 0 0 0 3px rgba(210, 154, 95, 0.12); }
-        textarea.field { min-height: 126px; resize: vertical; }
-
-        .footer {
-          background: #162a4f; color: white; padding: 28px 0 22px;
-        }
-        .footer-top {
-          display: grid; grid-template-columns: 1.2fr 1fr 1fr auto; gap: 24px; align-items: center;
-        }
-        .footer-brand .brand-mark { font-size: 54px; color: white; }
-        .footer-brand .brand-sub { color: #d29a5f; }
-        .footer-col { color: rgba(255,255,255,0.88); line-height: 1.7; }
-        .socials { display: flex; gap: 12px; justify-content: flex-end; }
-        .social {
-          width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.28);
-          display: flex; align-items: center; justify-content: center; font-size: 18px;
-        }
-        .footer-divider { height: 1px; background: rgba(255,255,255,0.12); margin: 20px 0 16px; }
-        .footer-bottom { display: flex; justify-content: space-between; gap: 18px; color: rgba(255,255,255,0.72); font-size: 14px; }
-        .footer-links { display: flex; gap: 26px; }
-
-        @media (max-width: 1100px) {
-          .hero h1 { font-size: 60px; }
-          .section-title, .about-copy .section-title, .contact-card h3 { font-size: 46px; }
-          .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-          .footer-top { grid-template-columns: 1fr 1fr; }
-          .socials { justify-content: flex-start; }
-        }
-
-        @media (max-width: 900px) {
-          .nav { display: none; }
-          .topbar-inner { flex-wrap: wrap; padding: 12px 0; }
-          .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
-          .hero-card { min-height: 420px; }
-          .logo-name { font-size: 86px; }
-          .hero h1 { font-size: 54px; }
-        }
-
-        @media (max-width: 640px) {
-          .container { padding: 0 18px; }
-          .hero { padding: 34px 0 56px; }
-          .hero h1 { font-size: 42px; }
-          .hero p, .contact-text, .about-text { font-size: 18px; }
-          .section-soft, .contact-section, .about-band { padding: 64px 0; }
-          .section-title, .about-copy .section-title, .contact-card h3 { font-size: 38px; }
-          .service-grid, .strength-grid, .form-grid, .footer-top, .footer-bottom { grid-template-columns: 1fr; display: grid; }
-          .footer-bottom { gap: 8px; }
-          .footer-links { gap: 14px; flex-wrap: wrap; }
-          .logo-name { font-size: 72px; }
-          .logo-tag { font-size: 30px; }
-        }
-      `}</style>
-
+    <div className="site-shell">
       <header className="topbar">
-        <div className="container topbar-inner">
-          <div className="brand-wrap">
-            <div className="brand-mark">HONG</div>
-            <div className="brand-sub">Tax & Advisory</div>
+        <a className="brand" href="#top" aria-label="HONG Tax & Advisory home">
+          <img src={logo} alt="HONG Tax & Advisory" />
+        </a>
+
+        <nav className="nav" aria-label="Main navigation">
+          <a href="#services">{t.nav[0]}</a>
+          <a href="#process">{t.nav[1]}</a>
+          <a href="#clients">{t.nav[2]}</a>
+          <a href="#faq">{t.nav[3]}</a>
+          <a href="#contact">{t.nav[4]}</a>
+        </nav>
+
+        <div className="toolbar" aria-label="Website controls">
+          <div className="language-switcher" aria-label="Language selector">
+            {LANGUAGES.map((item) => (
+              <button
+                key={item.code}
+                className={language === item.code ? 'active' : ''}
+                onClick={() => setLanguage(item.code)}
+                type="button"
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
-
-          <nav className="nav">
-            <a href="#services">Services</a>
-            <a href="#about">About</a>
-            <a href="#clients">Clients</a>
-            <a href="#resources">Resources</a>
-            <a href="#contact">Contact</a>
-          </nav>
-
-          <a href="#contact" className="btn btn-primary">Book a Consultation</a>
+          <button
+            className="theme-toggle"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            type="button"
+            aria-label="Toggle dark and light mode"
+          >
+            {theme === 'dark' ? '☀︎' : '☾'}
+          </button>
         </div>
       </header>
 
-      <section className="hero">
-        <div className="container hero-grid">
-          <div>
-            <div className="eyebrow">Tax. Accounting. Advisory.</div>
-            <h1>
-              Trusted guidance.<br />
-              Strategic insight.
-            </h1>
-            <p>
-              We provide tax, accounting, and advisory services to help individuals
-              and businesses grow with confidence.
-            </p>
-            <div className="hero-actions">
-              <a href="#contact" className="btn btn-dark">Book a Consultation</a>
-              <a href="#services" className="btn btn-light">Our Services</a>
-            </div>
-          </div>
-
-          <div className="hero-card" aria-label="Hong Tax & Advisory logo panel">
-            <div className="logo-panel">
-              <div className="logo-icons">
-                <div className="logo-shape-1" />
-                <div className="logo-shape-2" />
-                <div className="logo-shape-3" />
-                <div className="logo-shape-4" />
+      <main id="top">
+        <section className="hero-section section-pad">
+          <div className="container hero-grid">
+            <div className="hero-copy">
+              <p className="eyebrow">{t.badge}</p>
+              <h1>{t.heroTitle}</h1>
+              <p className="hero-text">{t.heroText}</p>
+              <div className="hero-actions">
+                <a className="button primary" href="#contact">{t.primaryCta}</a>
+                <a className="button ghost" href="#services">{t.secondaryCta}</a>
               </div>
-              <div className="logo-name">HONG</div>
-              <div className="logo-tag">Tax & Advisory</div>
+              <p className="license-note">{t.licenseNote}</p>
+            </div>
+            <div className="hero-logo-card" aria-hidden="true">
+              <img src={logo} alt="" />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="services" className="section-soft">
-        <div className="container">
-          <div className="section-title-wrap">
-            <div className="section-label">Services</div>
-            <div className="section-title">Solutions tailored to your needs</div>
-            <div className="section-divider" />
+        <section className="intro-strip">
+          <div className="mark-row" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
           </div>
+        </section>
 
-          <div className="service-grid">
-            {services.map((service) => (
-              <div className="service-card" key={service.title}>
-                <div className="service-icon">{service.icon}</div>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-                <div className="service-link">Learn more →</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="about" className="about-band">
-        <div className="container about-grid">
-          <div className="about-copy">
-            <div className="section-label">About</div>
-            <div className="section-title">
-              More than numbers.<br />
-              A partner in your success.
-            </div>
-            <div className="section-divider" />
-            <p className="about-text">
-              At Hong Tax & Advisory, we combine technical expertise with personalized
-              service. Our goal is to simplify complex matters so you can focus on
-              what you do best.
-            </p>
-
-            <div className="strength-grid">
-              {strengths.map((item) => (
-                <div className="strength-item" key={item.title}>
-                  <div className="strength-icon">{item.icon}</div>
-                  <div className="strength-title">{item.title}</div>
-                </div>
+        <section id="services" className="section-pad">
+          <div className="container">
+            <SectionHeading label={t.servicesLabel} title={t.servicesTitle} text={t.servicesText} />
+            <div className="service-grid">
+              {t.services.map(([title, description]) => (
+                <article className="service-card" key={title}>
+                  <div className="service-symbol">{title.slice(0, 2)}</div>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </article>
               ))}
             </div>
           </div>
+        </section>
 
-          <div className="about-image" />
-        </div>
-      </section>
-
-      <section id="contact" className="contact-section">
-        <div className="container contact-grid">
-          <div>
-            <div className="section-label">Contact</div>
-            <div className="section-title">
-              Let’s build your<br />
-              financial success together.
-            </div>
-            <div className="section-divider" style={{ marginLeft: 0 }} />
-            <div className="contact-text">
-              Reach out to schedule a consultation and tell us how we can support
-              your tax and accounting needs.
-            </div>
-            <div className="contact-lines">
-              <div>✉ fgrt73@gmail.com</div>
-              <div>☎ +1 (234) 456-7890</div>
+        <section id="process" className="section-pad process-section">
+          <div className="container">
+            <SectionHeading label={t.processLabel} title={t.processTitle} />
+            <div className="process-grid">
+              {t.process.map(([number, title, text]) => (
+                <article className="process-card" key={number}>
+                  <span>{number}</span>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </article>
+              ))}
             </div>
           </div>
+        </section>
 
-          <div className="contact-card">
-            <h3>Request a Consultation</h3>
-            <div className="form-grid">
-              <input className="field" placeholder="Full Name" />
-              <input className="field" placeholder="Email Address" />
-              <input className="field full-row" placeholder="Business / Company" />
-              <textarea className="field full-row" placeholder="How can we help you?" />
-              <button className="btn btn-primary full-row" type="button">Send Message</button>
+        <section id="clients" className="section-pad clients-section">
+          <div className="container two-column">
+            <div>
+              <p className="eyebrow">{t.clientsLabel}</p>
+              <h2>{t.clientsTitle}</h2>
+            </div>
+            <div className="client-list">
+              {t.clients.map(([title, text]) => (
+                <article className="client-item" key={title}>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </article>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section id="faq" className="section-pad">
+          <div className="container faq-wrap">
+            <SectionHeading label={t.faqLabel} title={t.faqTitle} />
+            <div className="faq-list">
+              {t.faqs.map(([question, answer]) => (
+                <details key={question}>
+                  <summary>{question}</summary>
+                  <p>{answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contact" className="section-pad contact-section">
+          <div className="container contact-grid">
+            <div>
+              <p className="eyebrow">{t.contactLabel}</p>
+              <h2>{t.contactTitle}</h2>
+              <p>{t.contactText}</p>
+              <div className="contact-lines">
+                <a href="mailto:london@hongtax.com">london@hongtax.com</a>
+                <a href="tel:+16315769725">+1 (631) 576 - 9725</a>
+              </div>
+            </div>
+            <form className="contact-form" action={mailto} method="post" encType="text/plain">
+              <input name="name" placeholder={t.formName} />
+              <input name="email" type="email" placeholder={t.formEmail} />
+              <input name="service" placeholder={t.formService} />
+              <textarea name="message" placeholder={t.formMessage} />
+              <button className="button primary" type="submit">{t.formButton}</button>
+            </form>
+          </div>
+        </section>
+      </main>
 
       <footer className="footer">
-        <div className="container">
-          <div className="footer-top">
-            <div className="footer-brand brand-wrap">
-              <div className="brand-mark">HONG</div>
-              <div className="brand-sub">Tax & Advisory</div>
-            </div>
-            <div className="footer-col">
-              123 Business Ave, Suite 100<br />
-              Los Angeles, CA 90001<br />
-              United States
-            </div>
-            <div className="footer-col">
-              fgrt73@gmail.com<br />
-              +1 (234) 456-7890
-            </div>
-            <div className="socials">
-              <div className="social">in</div>
-              <div className="social">✉</div>
-              <div className="social">◎</div>
-            </div>
-          </div>
-          <div className="footer-divider" />
-          <div className="footer-bottom">
-            <div>© 2026 Hong Tax & Advisory. All rights reserved.</div>
-            <div className="footer-links">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Terms of Service</a>
-            </div>
+        <div className="container footer-grid">
+          <img src={theme === 'dark' ? logoDarkBg : logoLightBg} alt="HONG Tax & Advisory" />
+          <p>{t.footerText}</p>
+          <div>
+            <a href="mailto:london@hongtax.com">london@hongtax.com</a>
+            <span>© {new Date().getFullYear()} HONG Tax & Advisory</span>
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function SectionHeading({ label, title, text }) {
+  return (
+    <div className="section-heading">
+      <p className="eyebrow">{label}</p>
+      <h2>{title}</h2>
+      {text ? <p>{text}</p> : null}
     </div>
   );
 }

@@ -34,7 +34,10 @@ body {
   min-width: 320px;
   background: var(--cream);
   color: var(--text);
+  font-size: 15px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 a {
@@ -50,6 +53,19 @@ textarea {
 
 button {
   cursor: pointer;
+}
+
+button,
+input,
+textarea,
+a,
+h1,
+h2,
+h3,
+p,
+summary {
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 .site-shell {
@@ -98,7 +114,7 @@ button {
   display: flex;
   justify-content: center;
   gap: clamp(18px, 3vw, 38px);
-  font-size: 0.94rem;
+  font-size: 0.88rem;
   color: var(--muted);
 }
 
@@ -147,15 +163,18 @@ button {
   height: 44px;
   border-radius: 50%;
   color: var(--text);
-  font-size: 1.2rem;
+  font-size: 1.08rem;
 }
 
 .section-pad {
   padding: clamp(74px, 9vw, 128px) 0;
+  border-top: 1px solid var(--line);
 }
 
 .hero-section {
-  padding-top: clamp(58px, 7vw, 104px);
+  padding-top: clamp(30px, 7vw, 104px);
+  border-top: 0;
+  border-bottom: 1px solid var(--line);
 }
 
 .hero-grid {
@@ -183,22 +202,23 @@ p {
 
 h1,
 h2 {
-  letter-spacing: -0.055em;
-  line-height: 0.96;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 h1 {
   max-width: 760px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(3.7rem, 9vw, 7.8rem);
+  font-size: clamp(3rem, 4.3vw, 6.2rem);
   color: var(--text);
+  white-space: pre-line;
 }
 
 h2 {
   margin-bottom: 20px;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  font-size: clamp(2.1rem, 4.6vw, 4.2rem);
 }
 
 h3 {
@@ -221,7 +241,7 @@ details p,
 
 .hero-text {
   max-width: 690px;
-  font-size: clamp(1.1rem, 1.8vw, 1.36rem);
+  font-size: clamp(1rem, 1.35vw, 1.16rem);
 }
 
 .hero-actions {
@@ -235,10 +255,11 @@ details p,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 50px;
+  min-height: 46px;
   border: 1px solid transparent;
   border-radius: 999px;
-  padding: 0 24px;
+  padding: 0 22px;
+  font-size: 0.94rem;
   font-weight: 800;
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
 }
@@ -284,49 +305,6 @@ details p,
   width: min(86%, 520px);
   height: auto;
   object-fit: contain;
-}
-
-.intro-strip {
-  overflow: hidden;
-  padding: 54px 0;
-  background: var(--navy);
-}
-
-.mark-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(18px, 4vw, 54px);
-  transform: scale(1.08);
-}
-
-.mark-row span {
-  display: block;
-  background: #f4f7f8;
-}
-
-.mark-row span:nth-child(1),
-.mark-row span:nth-child(2) {
-  width: 58px;
-  height: 148px;
-}
-
-.mark-row span:nth-child(3) {
-  width: 148px;
-  height: 148px;
-  border-radius: 50%;
-}
-
-.mark-row span:nth-child(4) {
-  width: 64px;
-  height: 156px;
-  transform: rotate(-34deg);
-}
-
-.mark-row span:nth-child(5) {
-  width: 148px;
-  height: 148px;
-  border-radius: 999px 0 0 999px;
 }
 
 .section-heading {
@@ -376,8 +354,13 @@ details,
 }
 
 .service-card h3 {
-  font-size: 1.55rem;
+  font-size: 1.34rem;
   color: var(--text);
+}
+
+.services-section,
+.faq-section {
+  background: color-mix(in srgb, var(--paper) 92%, var(--cream));
 }
 
 .process-section,
@@ -403,10 +386,11 @@ details,
   color: var(--gold);
   font-weight: 900;
   letter-spacing: -0.04em;
+  white-space: pre-line;
 }
 
 .process-card h3 {
-  font-size: 1.25rem;
+  font-size: 1.12rem;
 }
 
 .two-column,
@@ -429,7 +413,11 @@ details,
 
 .client-item h3 {
   margin-bottom: 6px;
-  font-size: 1.35rem;
+  font-size: 1.18rem;
+}
+
+.clients-section {
+  background: color-mix(in srgb, var(--gold) 7%, var(--paper));
 }
 
 .faq-wrap {
@@ -449,6 +437,7 @@ details {
 summary {
   cursor: pointer;
   padding: 22px 0;
+  font-size: 0.96rem;
   font-weight: 800;
   list-style: none;
 }
@@ -483,6 +472,12 @@ details p {
   font-weight: 800;
 }
 
+.contact-lines a,
+.footer a {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
 .contact-form {
   display: grid;
   gap: 14px;
@@ -495,7 +490,8 @@ details p {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 18px;
-  padding: 16px 18px;
+  padding: 14px 16px;
+  font-size: 0.95rem;
   outline: none;
   background: color-mix(in srgb, var(--paper) 84%, transparent);
   color: var(--text);
@@ -606,7 +602,7 @@ details p {
     gap: 16px;
     overflow-x: auto;
     padding-bottom: 4px;
-    font-size: 0.86rem;
+    font-size: 0.82rem;
   }
 
   .language-switcher button {
@@ -628,15 +624,6 @@ details p {
   .process-grid,
   .footer-grid {
     grid-template-columns: 1fr;
-  }
-
-  .intro-strip {
-    padding: 36px 0;
-  }
-
-  .mark-row {
-    gap: 14px;
-    transform: scale(0.68);
   }
 
   .footer div:last-child {

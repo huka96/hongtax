@@ -13,16 +13,16 @@ const copy = {
   ko: {
     nav: ['서비스', '진행절차', '고객유형', 'FAQ', '상담신청'],
     badge: 'HONG Tax & Advisory',
-    heroTitle: '미국 세무, 한국어로 정확하게.',
+    heroTitle: '미국 세무,\n정확하게.',
     heroText:
       '개인 세금보고부터 FBAR, FATCA, IRS/FTB Notice, 소규모 비즈니스 세무까지 — 복잡한 미국 세무를 명확하고 체계적으로 안내합니다.',
     primaryCta: '상담 신청하기',
     secondaryCta: '서비스 보기',
-    licenseNote: 'CPA license 발급 전에는 서비스 범위와 문구가 조정될 수 있습니다.',
+    licenseNote: '',
     servicesLabel: 'Services',
     servicesTitle: '온라인 기반 미국 세무 서비스',
     servicesText:
-      '처음부터 모든 업무를 무리하게 확장하기보다, 핵심 세무 영역을 중심으로 시스템화된 접수·검토·진행 프로세스를 구축합니다.',
+      '처음부터 모든 업무를 무리하게 확장하기보다, \n핵심 세무 영역을 중심으로 시스템화된 접수·검토·진행 프로세스를 구축합니다.',
     services: [
       ['Individual Tax Return', 'Form 1040, Federal & State return, extension filing, resident / nonresident tax review.'],
       ['FBAR & FATCA', '한국 및 해외 금융계좌, Form 8938, FinCEN 114 대상 여부 검토와 신고 지원.'],
@@ -267,17 +267,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="intro-strip">
-          <div className="mark-row" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
-        </section>
-
-        <section id="services" className="section-pad">
+        <section id="services" className="section-pad services-section">
           <div className="container">
             <SectionHeading label={t.servicesLabel} title={t.servicesTitle} text={t.servicesText} />
             <div className="service-grid">
@@ -324,7 +314,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="faq" className="section-pad">
+        <section id="faq" className="section-pad faq-section">
           <div className="container faq-wrap">
             <SectionHeading label={t.faqLabel} title={t.faqTitle} />
             <div className="faq-list">
